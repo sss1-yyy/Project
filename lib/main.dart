@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'theme/app_theme.dart';
+import 'screens/profile_screen.dart';
 
-// 1. Movie 클래스 작성
 class Movie {
   final String title;
   final String? nickname; // nullable 필드 예시로 같이 활용
@@ -47,7 +49,8 @@ class MovieLogApp extends StatelessWidget {
     return MaterialApp(
       title: '영화 기록',
       debugShowCheckedModeBanner: false,
-      home: const StartScreen(),
+      theme: AppTheme.light,
+      home: const ProfileScreen(), // TEMP: visual check, revert before commit
     );
   }
 }
@@ -86,15 +89,20 @@ class StartScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               SizedBox(
-                width: 128,
-                height: 160,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 32),
-                  child: const Center(
-                    child: Icon(Icons.movie_outlined, size: 80, color: Color(0xFF4F378A)),
-                  ),
-                ),
-              ),
+  width: 128,
+  height: 160,
+  child: Padding(
+    padding: const EdgeInsets.only(bottom: 32),
+    child: Center(
+      child: SvgPicture.asset(
+        'assets/logos/movielog_logo.svg',
+        width: 72,
+        height: 72,
+        semanticsLabel: 'MovieLog 로고',
+      ),
+    ),
+  ),
+),
               const Text(
                 '영화의 순간을\n기록하세요',
                 textAlign: TextAlign.center,
@@ -122,11 +130,15 @@ class StartScreen extends StatelessWidget {
               ),
               const Spacer(),
               SizedBox(
-                width: 326,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
+  width: 326,
+  height: 56,
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const ProfileScreen()),
+      );
+    },
+    style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4F378A),
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
