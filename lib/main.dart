@@ -1,6 +1,41 @@
 import 'package:flutter/material.dart';
 
+// 1. Movie 클래스 작성
+class Movie {
+  final String title;
+  final String? nickname; // nullable 필드 예시로 같이 활용
+
+  const Movie({required this.title, this.nickname});
+
+  // 4. nullable 닉네임을 안전한 기본값으로 변환
+  String get displayNickname {
+    return nickname?.trim().isNotEmpty == true ? nickname! : '이름 없음';
+  }
+}
+
 void main() {
+  // 2. 영화 3개를 List<Movie>에 넣기
+  final movies = <Movie>[
+    const Movie(title: '인터스텔라', nickname: '별로'),
+    const Movie(title: '기생충'),
+    const Movie(title: '라라랜드', nickname: '  '),
+  ];
+
+  // 3. for문으로 제목 출력
+  for (final movie in movies) {
+    debugPrint('for 출력: ${movie.title}');
+  }
+
+  // 3. map으로 제목 출력 (둘 중 하나만 써도 되지만 예시로 둘 다)
+  movies.map((movie) => movie.title).forEach((title) {
+    debugPrint('map 출력: $title');
+  });
+
+  // 4. nullable 닉네임 처리 확인
+  for (final movie in movies) {
+    debugPrint('${movie.title} 닉네임: ${movie.displayNickname}');
+  }
+
   runApp(const MovieLogApp());
 }
 
@@ -74,7 +109,7 @@ class StartScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               const Text(
-                '보고 싶은 영화부터 나만의 평점까지 한곳에서\n관리해요',
+                '보고 싶은 영화부터 나만의 평점까지\n 한곳에서 관리해요',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Noto Sans KR',
